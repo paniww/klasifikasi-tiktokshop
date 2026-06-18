@@ -154,7 +154,7 @@ col1.metric("Jumlah Data", "1.118")
 col2.metric("Data Latih", "894")
 col3.metric("Data Uji", "224")
 col4.metric("Buzzer", "160")
-col5.metric("Non-Buzzer", "958"))
+col5.metric("Non-Buzzer", "958")
 
 caption = st.text_area(
     "Masukkan Caption TikTok Shop",
@@ -326,12 +326,26 @@ ulasan, dan informasi produk tanpa ajakan pembelian secara langsung.
 st.subheader("Temuan Penelitian")
 
 st.write("""
-Kata yang paling sering muncul pada kategori buzzer
-antara lain 'banget', 'beli', 'murah', 'viral', dan 'promo'.
+Berdasarkan hasil klasifikasi terhadap 1.118 caption TikTok Shop,
+ditemukan bahwa kategori buzzer cenderung menggunakan kata-kata
+yang bersifat persuasif dan berorientasi pada penjualan, seperti
+'promo', 'beli', 'murah', 'viral', 'keranjang', dan 'harga'.
 
-Sementara pada kategori non-buzzer lebih banyak ditemukan
-kata yang berkaitan dengan pengalaman penggunaan dan ulasan produk.
-""")
+Sebaliknya, kategori non-buzzer lebih banyak menggunakan bahasa
+yang berfokus pada pengalaman penggunaan produk, ulasan, dan
+penyampaian informasi kepada pengguna lain.
+
+Hasil penelitian menunjukkan bahwa pola promosi akun buzzer
+ditandai dengan adanya penekanan terhadap manfaat produk,
+ajakan pembelian, serta penggunaan kata-kata promosi yang
+lebih intens dibandingkan akun non-buzzer.
+
+Model Naïve Bayes yang digunakan dalam penelitian ini mampu
+mengklasifikasikan caption ke dalam kategori buzzer dan
+non-buzzer dengan tingkat akurasi sebesar 77%, sehingga
+dapat digunakan untuk membantu mengidentifikasi pola promosi
+produk pada TikTok Shop.
+"""))
 
 st.caption(
     "Prototype penelitian skripsi Program Studi Sistem Informasi "
