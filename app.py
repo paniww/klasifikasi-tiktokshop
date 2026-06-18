@@ -261,7 +261,7 @@ if st.button(
         """)
 
     st.divider()
-    st.subheader("Hasil Klasifikasi")
+    st.subheader("Probabilitas Klasifikasi")
 
     st.write(f"Label Non-Buzzer : {prob[0]*100:.2f}%")
     st.write(f"Label Buzzer : {prob[1]*100:.2f}%")
@@ -345,7 +345,7 @@ mengklasifikasikan caption ke dalam kategori buzzer dan
 non-buzzer dengan tingkat akurasi sebesar 77%, sehingga
 dapat digunakan untuk membantu mengidentifikasi pola promosi
 produk pada TikTok Shop.
-"""))
+""")
 
 st.caption(
     "Prototype penelitian skripsi Program Studi Sistem Informasi "
