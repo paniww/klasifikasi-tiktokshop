@@ -155,36 +155,40 @@ if st.button("Analisis"):
         st.warning("Masukkan caption terlebih dahulu.")
         st.stop()
 
-
     case_text = case_folding(caption)
 
-clean_text = cleaning(case_text)
+    clean_text = cleaning(case_text)
 
-normal_text = normalisasi(clean_text)
+    normal_text = normalisasi(clean_text)
 
-token_text = tokenizing(normal_text)
+    token_text = tokenizing(normal_text)
 
-stopword_text = remove_stopwords(token_text)
+    stopword_text = remove_stopwords(token_text)
 
-stem_text = stemming(stopword_text)
+    stem_text = stemming(stopword_text)
+
+    st.subheader("Tahapan Preprocessing")
+
+    with st.expander("0. Caption Asli"):
+        st.write(caption)
 
     with st.expander("1. Case Folding"):
-    st.write(case_text)
+        st.write(case_text)
 
-with st.expander("2. Cleaning"):
-    st.write(clean_text)
+    with st.expander("2. Cleaning"):
+        st.write(clean_text)
 
-with st.expander("3. Normalisasi"):
-    st.write(normal_text)
+    with st.expander("3. Normalisasi"):
+        st.write(normal_text)
 
-with st.expander("4. Tokenizing"):
-    st.write(token_text)
+    with st.expander("4. Tokenizing"):
+        st.write(token_text)
 
-with st.expander("5. Stopword Removal"):
-    st.write(stopword_text)
+    with st.expander("5. Stopword Removal"):
+        st.write(stopword_text)
 
-with st.expander("6. Stemming"):
-    st.write(stem_text)
+    with st.expander("6. Stemming"):
+        st.write(stem_text)
 
     data = tfidf.transform([stem_text])
 
@@ -257,9 +261,9 @@ st.markdown("""
 - **Data Latih** : 894 Data
 - **Data Uji** : 224 Data
 - **Akurasi** : 77%
-- **Precision** : 77%
-- **Recall** : 77%
-- **F1-Score** : 77%
+- **Precision** : 76%
+- **Recall** : 85%
+- **F1-Score** : 81%
 """)
 
 st.write("---")
