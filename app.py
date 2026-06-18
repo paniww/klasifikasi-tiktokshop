@@ -241,7 +241,8 @@ if st.button(
 
     prob = model.predict_proba(data)[0]
 
-     st.subheader("Hasil Klasifikasi")
+    st.divider()
+    st.subheader("Hasil Klasifikasi")
 
     if hasil == 1:
         st.error("⚠️ BUZZER")
