@@ -148,16 +148,13 @@ Prototype ini merupakan implementasi hasil penelitian
 untuk Menganalisis Pola Promosi Produk**.
 """)
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4, col5 = st.columns(5)
 
-with col1:
-    st.metric("Jumlah Data", "1.118")
-
-with col2:
-    st.metric("Data Latih", "894")
-
-with col3:
-    st.metric("Data Uji", "224")
+col1.metric("Jumlah Data", "1.118")
+col2.metric("Data Latih", "894")
+col3.metric("Data Uji", "224")
+col4.metric("Buzzer", "160")
+col5.metric("Non-Buzzer", "958"))
 
 caption = st.text_area(
     "Masukkan Caption TikTok Shop",
@@ -167,7 +164,7 @@ caption = st.text_area(
 if st.button(
     "🔍 Analisis Caption",
     use_container_width=True
-)
+):
     if not caption.strip():
         st.warning("Masukkan caption terlebih dahulu.")
         st.stop()
@@ -263,7 +260,8 @@ if st.button(
         menunjukkan pola ulasan dan pengalaman penggunaan produk.
         """)
 
-    st.subheader("Probabilitas Klasifikasi")
+    st.divider()
+    st.subheader("Hasil Klasifikasi")
 
     st.write(f"Label Non-Buzzer : {prob[0]*100:.2f}%")
     st.write(f"Label Buzzer : {prob[1]*100:.2f}%")
