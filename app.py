@@ -244,7 +244,7 @@ if st.button("Analisis"):
         st.write("""
         Berdasarkan hasil klasifikasi model, caption ini memiliki
         karakteristik promosi yang umum ditemukan pada kategori buzzer.
-        """))
+        """)
 
     else:
 
