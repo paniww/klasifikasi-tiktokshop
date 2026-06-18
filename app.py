@@ -1,81 +1,153 @@
 import streamlit as st
 import joblib
+import re
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 
 model = joblib.load("model_naive_bayes.pkl")
 tfidf = joblib.load("model_tfidf.pkl")
 
-st.set_page_config(page_title="Analisis Pola Promosi Produk TikTok Shop")
+factory = StemmerFactory()
+stemmer = factory.create_stemmer()
+
+def case_folding(text):
+    return str(text).lower()
+
+def cleaning(text):
+    text = re.sub(r'\d+', '', text)
+    text = re.sub(r'[^\w\s]', '', text)
+    return text
+
+def tokenizing(text):
+    return text.split()
+
+def stemming(tokens):
+    hasil = []
+    for kata in tokens:
+        hasil.append(stemmer.stem(kata))
+    return " ".join(hasil)
+
+st.set_page_config(
+    page_title="Analisis Pola Promosi Produk TikTok Shop",
+    layout="wide"
+)
 
 st.title("Analisis Pola Promosi Produk TikTok Shop")
 st.subheader("Berdasarkan Klasifikasi Buzzer dan Non-Buzzer")
 
 st.write("""
 Prototype ini merupakan implementasi hasil penelitian
-klasifikasi buzzer dan non-buzzer pada TikTok Shop
-menggunakan metode TF-IDF dan algoritma Naïve Bayes.
+**Klasifikasi Akun Buzzer di TikTok Shop Menggunakan Algoritma Naïve Bayes
+untuk Menganalisis Pola Promosi Produk**.
 """)
 
 caption = st.text_area(
-"Masukkan Caption",
-height=200
+    "Masukkan Caption TikTok Shop",
+    height=200
 )
 
 if st.button("Analisis"):
 
-```
-data = tfidf.transform([caption])
+    if not caption.strip():
+        st.warning("Masukkan caption terlebih dahulu.")
+        st.stop()
 
-hasil = model.predict(data)[0]
+    case_text = case_folding(caption)
 
-prob = model.predict_proba(data)[0]
+    clean_text = cleaning(case_text)
 
-st.subheader("Hasil Klasifikasi")
+    token_text = tokenizing(clean_text)
 
-if hasil == 1:
+    stem_text = stemming(token_text)
 
-    st.error("BUZZER")
+    st.subheader("Tahapan Preprocessing")
 
-    st.write("""
-    Karakteristik:
-    - Mengandung unsur promosi yang kuat
-    - Menekankan manfaat produk
-    - Terdapat ajakan pembelian
-    - Bersifat persuasif
-    """)
+    with st.expander("1. Case Folding"):
+        st.write(case_text)
 
-else:
+    with st.expander("2. Cleaning"):
+        st.write(clean_text)
 
-    st.success("NON-BUZZER")
+    with st.expander("3. Tokenizing"):
+        st.write(token_text)
 
-    st.write("""
-    Karakteristik:
-    - Berisi pengalaman penggunaan produk
-    - Bersifat informatif
-    - Berupa ulasan produk
-    - Tidak ditemukan ajakan pembelian langsung
-    """)
+    with st.expander("4. Stemming"):
+        st.write(stem_text)
 
-st.write("---")
+    data = tfidf.transform([stem_text])
 
-st.subheader("Probabilitas Klasifikasi")
+    st.subheader("Hasil Ekstraksi Fitur TF-IDF")
 
-st.write(f"Label Non-Buzzer : {prob[0]*100:.2f}%")
-st.write(f"Label Buzzer : {prob[1]*100:.2f}%")
-```
+    feature_names = tfidf.get_feature_names_out()
+
+    scores = data.toarray()[0]
+
+    hasil_tfidf = []
+
+    for kata, skor in zip(feature_names, scores):
+        if skor > 0:
+            hasil_tfidf.append((kata, round(float(skor), 4)))
+
+    hasil_tfidf = sorted(
+        hasil_tfidf,
+        key=lambda x: x[1],
+        reverse=True
+    )
+
+    if len(hasil_tfidf) > 0:
+        st.table(hasil_tfidf[:10])
+    else:
+        st.write("Tidak ada fitur TF-IDF yang terdeteksi.")
+
+    hasil = model.predict(data)[0]
+
+    prob = model.predict_proba(data)[0]
+
+    st.subheader("Hasil Klasifikasi")
+
+    if hasil == 1:
+
+        st.error("BUZZER")
+
+        st.write("""
+        **Karakteristik yang teridentifikasi:**
+        - Mengandung unsur promosi yang kuat
+        - Menekankan manfaat produk
+        - Terdapat ajakan pembelian
+        - Bersifat persuasif
+        """)
+
+    else:
+
+        st.success("NON-BUZZER")
+
+        st.write("""
+        **Karakteristik yang teridentifikasi:**
+        - Berisi pengalaman penggunaan produk
+        - Bersifat informatif
+        - Berupa ulasan produk
+        - Tidak ditemukan ajakan pembelian langsung
+        """)
+
+    st.subheader("Probabilitas Klasifikasi")
+
+    st.write(f"Label Non-Buzzer : {prob[0]*100:.2f}%")
+    st.write(f"Label Buzzer : {prob[1]*100:.2f}%")
 
 st.write("---")
 
 st.subheader("Informasi Model")
 
-st.write("""
-
-* Algoritma : Naïve Bayes
-* Ekstraksi Fitur : TF-IDF
-* Jumlah Data : 1.118 Data
-* Data Latih : 894 Data
-* Data Uji : 224 Data
-* Akurasi : 77%
-  """)
+st.markdown("""
+- **Algoritma** : Naïve Bayes
+- **Ekstraksi Fitur** : TF-IDF
+- **Jumlah Data** : 1.118 Data
+- **Data Latih** : 894 Data
+- **Data Uji** : 224 Data
+- **Akurasi** : 77%
+- **Precision** : 77%
+- **Recall** : 77%
+- **F1-Score** : 77%
+""")
 
 st.write("---")
 
@@ -84,35 +156,37 @@ st.subheader("Hasil Analisis Pola Promosi")
 col1, col2 = st.columns(2)
 
 with col1:
-st.markdown("### Karakteristik Buzzer")
-st.write("""
-banget,
-beli,
-murah,
-viral,
-promo,
-keranjang,
-link,
-harga
-""")
+    st.markdown("### Karakteristik Caption Buzzer")
+
+    st.write("""
+    - banget
+    - beli
+    - murah
+    - viral
+    - promo
+    - keranjang
+    - link
+    - harga
+    """)
 
 with col2:
-st.markdown("### Karakteristik Non-Buzzer")
-st.write("""
-review,
-jujur,
-pakai,
-skincare,
-kulit,
-produk,
-barang
-""")
+    st.markdown("### Karakteristik Caption Non-Buzzer")
+
+    st.write("""
+    - review
+    - jujur
+    - pakai
+    - skincare
+    - kulit
+    - produk
+    - barang
+    """)
 
 st.write("---")
 
 st.info("""
-Hasil penelitian menunjukkan bahwa caption buzzer
-cenderung menggunakan bahasa persuasif dan ajakan
-pembelian secara langsung, sedangkan caption non-buzzer
-lebih berfokus pada pengalaman penggunaan dan ulasan produk.
+Hasil penelitian menunjukkan bahwa caption buzzer cenderung menggunakan
+bahasa persuasif, ajakan pembelian, serta penekanan terhadap promosi produk.
+Sebaliknya, caption non-buzzer lebih banyak berisi pengalaman penggunaan,
+ulasan, dan informasi produk tanpa ajakan pembelian secara langsung.
 """)
