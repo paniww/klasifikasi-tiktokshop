@@ -2,6 +2,9 @@ import streamlit as st
 import joblib
 import re
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+from nltk.corpus import stopwords
+import nltk
+nltk.download('stopwords')
 
 model = joblib.load("model_naive_bayes.pkl")
 tfidf = joblib.load("model_tfidf.pkl")
@@ -13,12 +16,113 @@ def case_folding(text):
     return str(text).lower()
 
 def cleaning(text):
-    text = re.sub(r'\d+', '', text)
-    text = re.sub(r'[^\w\s]', '', text)
-    return text
+
+    text = str(text)
+
+    # hapus URL
+    text = re.sub(r'http\S+|www\S+', ' ', text)
+
+    # hapus mention
+    text = re.sub(r'@\w+', ' ', text)
+
+    # hapus hashtag
+    text = re.sub(r'#\w+', ' ', text)
+
+    # hapus angka
+    text = re.sub(r'\d+', ' ', text)
+
+    # hapus tanda baca & karakter selain huruf
+    text = re.sub(r'[^a-zA-Z\s]', ' ', text)
+
+    # hapus spasi berlebih
+    text = re.sub(r'\s+', ' ', text)
+
+    return text.strip()
+
+normalisasi_dict = {
+
+    'yg':'yang',
+    'ga':'tidak',
+    'gak':'tidak',
+    'nggak':'tidak',
+    'g':'tidak',
+    'dunk':'dong',
+
+    'udah':'sudah',
+    'aja':'saja',
+    'bgt':'banget',
+
+    'kalo':'kalau',
+    'kl':'kalau',
+
+    'sampe':'sampai',
+    'ngasi':'memberi',
+
+    'pake':'pakai',
+    'kepake':'terpakai',
+    'dipake':'dipakai',
+
+    'tau':'tahu',
+    'tp':'tapi',
+    'tuh':'itu',
+
+    'gue':'saya',
+    'gw':'saya',
+
+    'nih':'ini',
+    'ni':'ini',
+    'yaa':'ya'
+}
+
+def normalisasi(text):
+
+    hasil = []
+
+    for kata in text.split():
+
+        hasil.append(
+            normalisasi_dict.get(kata, kata)
+        )
+
+    return " ".join(hasil)
 
 def tokenizing(text):
     return text.split()
+
+stop_words = set(
+    stopwords.words('indonesian')
+)
+
+custom_stopwords = {
+
+    'aku',
+    'saya',
+    'kalian',
+    'kamu',
+
+    'ya',
+    'sih',
+
+    'nih',
+    'dong',
+
+    'to',
+    'it',
+    'the',
+    'my',
+
+    'nya'
+}
+
+stop_words.update(custom_stopwords)
+
+def remove_stopwords(tokens):
+
+    return [
+        kata
+        for kata in tokens
+        if kata not in stop_words
+    ]
 
 def stemming(tokens):
     hasil = []
@@ -51,27 +155,36 @@ if st.button("Analisis"):
         st.warning("Masukkan caption terlebih dahulu.")
         st.stop()
 
+
     case_text = case_folding(caption)
 
-    clean_text = cleaning(case_text)
+clean_text = cleaning(case_text)
 
-    token_text = tokenizing(clean_text)
+normal_text = normalisasi(clean_text)
 
-    stem_text = stemming(token_text)
+token_text = tokenizing(normal_text)
 
-    st.subheader("Tahapan Preprocessing")
+stopword_text = remove_stopwords(token_text)
+
+stem_text = stemming(stopword_text)
 
     with st.expander("1. Case Folding"):
-        st.write(case_text)
+    st.write(case_text)
 
-    with st.expander("2. Cleaning"):
-        st.write(clean_text)
+with st.expander("2. Cleaning"):
+    st.write(clean_text)
 
-    with st.expander("3. Tokenizing"):
-        st.write(token_text)
+with st.expander("3. Normalisasi"):
+    st.write(normal_text)
 
-    with st.expander("4. Stemming"):
-        st.write(stem_text)
+with st.expander("4. Tokenizing"):
+    st.write(token_text)
+
+with st.expander("5. Stopword Removal"):
+    st.write(stopword_text)
+
+with st.expander("6. Stemming"):
+    st.write(stem_text)
 
     data = tfidf.transform([stem_text])
 
