@@ -147,19 +147,27 @@ Prototype ini merupakan implementasi hasil penelitian
 **Klasifikasi Akun Buzzer di TikTok Shop Menggunakan Algoritma Naïve Bayes
 untuk Menganalisis Pola Promosi Produk**.
 """)
-st.info("""
-Dataset penelitian terdiri dari 1.118 caption TikTok Shop
-yang telah melalui tahapan preprocessing, ekstraksi fitur TF-IDF,
-dan klasifikasi menggunakan algoritma Naïve Bayes.
-""")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("Jumlah Data", "1.118")
+
+with col2:
+    st.metric("Data Latih", "894")
+
+with col3:
+    st.metric("Data Uji", "224")
 
 caption = st.text_area(
     "Masukkan Caption TikTok Shop",
-    height=200
+    height=120
 )
 
-if st.button("Analisis"):
-
+if st.button(
+    "🔍 Analisis Caption",
+    use_container_width=True
+)
     if not caption.strip():
         st.warning("Masukkan caption terlebih dahulu.")
         st.stop()
@@ -176,6 +184,7 @@ if st.button("Analisis"):
 
     stem_text = stemming(stopword_text)
 
+    st.divider()
     st.subheader("Tahapan Preprocessing")
 
     with st.expander("0. Caption Asli"):
@@ -238,8 +247,7 @@ if st.button("Analisis"):
     st.subheader("Hasil Klasifikasi")
 
     if hasil == 1:
-
-        st.error("BUZZER")
+        st.error("⚠️ BUZZER")
 
         st.write("""
         Berdasarkan hasil klasifikasi model, caption ini memiliki
@@ -248,7 +256,7 @@ if st.button("Analisis"):
 
     else:
 
-        st.success("NON-BUZZER")
+        st.success("✅ NON-BUZZER")
 
         st.write("""
         Berdasarkan hasil klasifikasi model, caption ini lebih
