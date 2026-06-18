@@ -7,6 +7,7 @@ tfidf = joblib.load("model_tfidf.pkl")
 st.set_page_config(page_title="Analisis Pola Promosi Produk TikTok Shop")
 
 st.title("Analisis Pola Promosi Produk TikTok Shop")
+st.subheader("Berdasarkan Klasifikasi Buzzer dan Non-Buzzer")
 
 st.write("""
 Prototype ini merupakan implementasi hasil penelitian
