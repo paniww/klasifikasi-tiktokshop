@@ -136,13 +136,21 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Analisis Pola Promosi Produk TikTok Shop")
-st.subheader("Berdasarkan Klasifikasi Buzzer dan Non-Buzzer")
+st.title("Prototype Analisis Pola Promosi Produk TikTok Shop")
+st.caption(
+    "Implementasi Klasifikasi Buzzer dan Non-Buzzer "
+    "Menggunakan Algoritma Naïve Bayes"
+)
 
 st.write("""
 Prototype ini merupakan implementasi hasil penelitian
 **Klasifikasi Akun Buzzer di TikTok Shop Menggunakan Algoritma Naïve Bayes
 untuk Menganalisis Pola Promosi Produk**.
+""")
+st.info("""
+Dataset penelitian terdiri dari 1.118 caption TikTok Shop
+yang telah melalui tahapan preprocessing, ekstraksi fitur TF-IDF,
+dan klasifikasi menggunakan algoritma Naïve Bayes.
 """)
 
 caption = st.text_area(
@@ -234,23 +242,17 @@ if st.button("Analisis"):
         st.error("BUZZER")
 
         st.write("""
-        **Karakteristik yang teridentifikasi:**
-        - Mengandung unsur promosi yang kuat
-        - Menekankan manfaat produk
-        - Terdapat ajakan pembelian
-        - Bersifat persuasif
-        """)
+        Berdasarkan hasil klasifikasi model, caption ini memiliki
+        karakteristik promosi yang umum ditemukan pada kategori buzzer.
+        """))
 
     else:
 
         st.success("NON-BUZZER")
 
         st.write("""
-        **Karakteristik yang teridentifikasi:**
-        - Berisi pengalaman penggunaan produk
-        - Bersifat informatif
-        - Berupa ulasan produk
-        - Tidak ditemukan ajakan pembelian langsung
+        Berdasarkan hasil klasifikasi model, caption ini lebih
+        menunjukkan pola ulasan dan pengalaman penggunaan produk.
         """)
 
     st.subheader("Probabilitas Klasifikasi")
@@ -315,3 +317,17 @@ bahasa persuasif, ajakan pembelian, serta penekanan terhadap promosi produk.
 Sebaliknya, caption non-buzzer lebih banyak berisi pengalaman penggunaan,
 ulasan, dan informasi produk tanpa ajakan pembelian secara langsung.
 """)
+st.subheader("Temuan Penelitian")
+
+st.write("""
+Kata yang paling sering muncul pada kategori buzzer
+antara lain 'banget', 'beli', 'murah', 'viral', dan 'promo'.
+
+Sementara pada kategori non-buzzer lebih banyak ditemukan
+kata yang berkaitan dengan pengalaman penggunaan dan ulasan produk.
+""")
+
+st.caption(
+    "Prototype penelitian skripsi Program Studi Sistem Informasi "
+    "Institut Teknologi Mojosari"
+)
