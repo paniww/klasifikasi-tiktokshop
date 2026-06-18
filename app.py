@@ -169,25 +169,6 @@ if st.button(
         st.warning("Masukkan caption terlebih dahulu.")
         st.stop()
 
-    st.subheader("Hasil Klasifikasi")
-
-    if hasil == 1:
-        st.error("⚠️ BUZZER")
-
-        st.write("""
-        Berdasarkan hasil klasifikasi model, caption ini memiliki
-        karakteristik promosi yang umum ditemukan pada kategori buzzer.
-        """)
-
-    else:
-
-        st.success("✅ NON-BUZZER")
-
-        st.write("""
-        Berdasarkan hasil klasifikasi model, caption ini lebih
-        menunjukkan pola ulasan dan pengalaman penggunaan produk.
-        """)
-
     case_text = case_folding(caption)
 
     clean_text = cleaning(case_text)
@@ -259,6 +240,25 @@ if st.button(
     hasil = model.predict(data)[0]
 
     prob = model.predict_proba(data)[0]
+
+     st.subheader("Hasil Klasifikasi")
+
+    if hasil == 1:
+        st.error("⚠️ BUZZER")
+
+        st.write("""
+        Berdasarkan hasil klasifikasi model, caption ini memiliki
+        karakteristik promosi yang umum ditemukan pada kategori buzzer.
+        """)
+
+    else:
+
+        st.success("✅ NON-BUZZER")
+
+        st.write("""
+        Berdasarkan hasil klasifikasi model, caption ini lebih
+        menunjukkan pola ulasan dan pengalaman penggunaan produk.
+        """)
 
     st.divider()
     st.subheader("Probabilitas Klasifikasi")
