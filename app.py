@@ -1,6 +1,7 @@
 import streamlit as st
 import joblib
 import re
+import pandas as pd
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from nltk.corpus import stopwords
 import nltk
@@ -211,7 +212,14 @@ if st.button("Analisis"):
     )
 
     if len(hasil_tfidf) > 0:
-        st.table(hasil_tfidf[:10])
+
+        df_tfidf = pd.DataFrame(
+           hasil_tfidf[:10],
+           columns=["Kata", "Bobot TF-IDF"]
+    )
+
+        st.table(df_tfidf)
+
     else:
         st.write("Tidak ada fitur TF-IDF yang terdeteksi.")
 
