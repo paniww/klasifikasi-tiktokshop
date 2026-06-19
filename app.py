@@ -136,16 +136,97 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title(
-    "Analisis Pola Promosi Produk TikTok Shop"
-)
+st.markdown("""
+<style>
+
+/* Background utama */
+.stApp{
+    background-color:#F8FAFC;
+}
+
+/* Card Metric */
+div[data-testid="metric-container"]{
+    background: linear-gradient(
+        135deg,
+        #60A5FA,
+        #38BDF8
+    );
+    border-radius:15px;
+    padding:20px;
+    color:white;
+    box-shadow:0px 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Judul metric */
+div[data-testid="metric-container"] label{
+    color:white !important;
+}
+
+/* Nilai metric */
+div[data-testid="metric-container"] div{
+    color:white !important;
+}
+
+/* Tombol */
+.stButton > button{
+    background: linear-gradient(
+        135deg,
+        #3B82F6,
+        #0EA5E9
+    );
+    color:white;
+    border:none;
+    border-radius:10px;
+    height:50px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* Hover tombol */
+.stButton > button:hover{
+    background:#2563EB;
+}
+
+/* Text Area */
+textarea{
+    border-radius:10px !important;
+    border:2px solid #BFDBFE !important;
+}
+
+/* Expander */
+.streamlit-expanderHeader{
+    background-color:#EFF6FF;
+    border-radius:10px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div style='
+background:linear-gradient(
+135deg,
+#60A5FA,
+#38BDF8
+);
+padding:30px;
+border-radius:20px;
+color:white;
+'>
+
+<h1>Analisis Pola Promosi Produk TikTok Shop</h1>
+
+<p>
+Implementasi Hasil Penelitian Klasifikasi Akun Buzzer
+Menggunakan Algoritma Naïve Bayes
+</p>
+
+</div>
+""", unsafe_allow_html=True)
+
 
 st.caption(
     "Implementasi Hasil Penelitian Klasifikasi Akun Buzzer "
-    "Menggunakan Algoritma Naïve Bayes"
-)
-st.caption(
-    "Implementasi Klasifikasi Buzzer dan Non-Buzzer "
     "Menggunakan Algoritma Naïve Bayes"
 )
 
@@ -155,6 +236,25 @@ Prototype ini merupakan implementasi hasil penelitian
 untuk Menganalisis Pola Promosi Produk**.
 """)
 
+st.markdown("""
+<div style='
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0px 2px 10px rgba(0,0,0,0.08);
+margin-top:20px;
+'>
+
+<h3>Tujuan Penelitian</h3>
+
+<p>
+Mengklasifikasikan caption TikTok Shop ke dalam kategori
+buzzer dan non-buzzer menggunakan algoritma Naïve Bayes
+untuk menganalisis pola promosi produk.
+</p>
+
+</div>
+""", unsafe_allow_html=True)
 st.divider()
 st.markdown("## Ringkasan Hasil Penelitian")
 
