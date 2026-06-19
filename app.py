@@ -136,234 +136,213 @@ st.set_page_config(
     layout="wide"
 )
 
-st.markdown("""
-<style>
-
-/* Background utama */
-.stApp{
-    background-color:#F8FAFC;
-}
-
-/* Card Metric */
-div[data-testid="metric-container"]{
-    background: linear-gradient(
-        135deg,
-        #60A5FA,
-        #38BDF8
-    );
-    border-radius:15px;
-    padding:20px;
-    color:white;
-    box-shadow:0px 4px 12px rgba(0,0,0,0.1);
-}
-
-/* Judul metric */
-div[data-testid="metric-container"] label{
-    color:white !important;
-}
-
-/* Nilai metric */
-div[data-testid="metric-container"] div{
-    color:white !important;
-}
-
-/* Tombol */
-.stButton > button{
-    background: linear-gradient(
-        135deg,
-        #3B82F6,
-        #0EA5E9
-    );
-    color:white;
-    border:none;
-    border-radius:10px;
-    height:50px;
-    font-size:18px;
-    font-weight:bold;
-}
-
-/* Hover tombol */
-.stButton > button:hover{
-    background:#2563EB;
-}
-
-/* Text Area */
-textarea{
-    border-radius:10px !important;
-    border:2px solid #BFDBFE !important;
-}
-
-/* Expander */
-.streamlit-expanderHeader{
-    background-color:#EFF6FF;
-    border-radius:10px;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div style='
-background:linear-gradient(
-135deg,
-#60A5FA,
-#38BDF8
-);
-padding:30px;
-border-radius:20px;
-color:white;
-'>
-
-<h1>Analisis Pola Promosi Produk TikTok Shop</h1>
-
-<p>
-Implementasi Hasil Penelitian Klasifikasi Akun Buzzer
-Menggunakan Algoritma Naïve Bayes
-</p>
-
-</div>
-""", unsafe_allow_html=True)
-
-
-st.caption(
-    "Implementasi Hasil Penelitian Klasifikasi Akun Buzzer "
-    "Menggunakan Algoritma Naïve Bayes"
+menu = st.sidebar.radio(
+    "Menu",
+    [
+        "Dashboard",
+        "Dataset",
+        "Preprocessing",
+        "TF-IDF",
+        "Evaluasi Model",
+        "Pola Promosi",
+        "Analisis Caption"
+    ]
 )
 
-st.write("""
-Prototype ini merupakan implementasi hasil penelitian
-**Klasifikasi Akun Buzzer di TikTok Shop Menggunakan Algoritma Naïve Bayes
-untuk Menganalisis Pola Promosi Produk**.
-""")
+# ==================================
+# DASHBOARD
+# ==================================
 
-st.markdown("""
-<div style='
-background:white;
-padding:20px;
-border-radius:15px;
-box-shadow:0px 2px 10px rgba(0,0,0,0.08);
-margin-top:20px;
-'>
+if menu == "Dashboard":
 
-<h3>Tujuan Penelitian</h3>
-
-<p>
-Mengklasifikasikan caption TikTok Shop ke dalam kategori
-buzzer dan non-buzzer menggunakan algoritma Naïve Bayes
-untuk menganalisis pola promosi produk.
-</p>
-
-</div>
-""", unsafe_allow_html=True)
-st.divider()
-st.markdown("## Ringkasan Hasil Penelitian")
-
-col1, col2, col3, col4, col5 = st.columns(5)
-
-col1.metric("Dataset", "1.118")
-col2.metric("Buzzer", "160")
-col3.metric("Non-Buzzer", "958")
-col4.metric("Akurasi", "77%")
-col5.metric("F1-Score", "81%")
-
-st.subheader("Hasil Analisis Pola Promosi")
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown("### Karakteristik Caption Buzzer")
+    st.title("Analisis Pola Promosi Produk TikTok Shop")
 
     st.write("""
-    - banget
-    - beli
-    - murah
-    - viral
-    - promo
-    - keranjang
-    - link
-    - harga
+    Sistem ini merupakan implementasi hasil penelitian
+    klasifikasi akun buzzer pada TikTok Shop menggunakan
+    algoritma Naïve Bayes untuk menganalisis pola promosi produk.
     """)
 
-with col2:
-    st.markdown("### Karakteristik Caption Non-Buzzer")
+    col1,col2,col3,col4,col5 = st.columns(5)
+
+    col1.metric("Dataset","1.118")
+    col2.metric("Buzzer","160")
+    col3.metric("Non-Buzzer","958")
+    col4.metric("Akurasi","77%")
+    col5.metric("F1-Score","81%")
+
+    st.subheader("Ringkasan Hasil Penelitian")
 
     st.write("""
-    - review
-    - jujur
-    - pakai
-    - skincare
-    - kulit
-    - produk
-    - barang
+    Penelitian dilakukan terhadap 1.118 caption TikTok Shop.
+    Hasil klasifikasi menunjukkan bahwa caption buzzer
+    cenderung menggunakan bahasa persuasif dan berorientasi
+    pada promosi produk, sedangkan caption non-buzzer lebih
+    banyak berisi pengalaman penggunaan dan ulasan produk.
     """)
 
-st.divider()
+# ==================================
+# DATASET
+# ==================================
 
-st.subheader("Temuan Penelitian")
+elif menu == "Dataset":
 
-st.write("""
-1. Dataset penelitian terdiri dari 1.118 caption TikTok Shop yang
-diklasifikasikan menjadi 160 data buzzer dan 958 data non-buzzer.
+    st.header("Dataset Penelitian")
 
-2. Caption buzzer cenderung menggunakan bahasa yang lebih persuasif
-dan berorientasi pada promosi produk dibandingkan caption non-buzzer.
+    st.write("""
+    Dataset penelitian terdiri dari 1.118 caption TikTok Shop
+    yang telah melalui proses seleksi dan pelabelan data.
+    """)
 
-3. Caption non-buzzer lebih banyak berisi pengalaman penggunaan,
-ulasan, dan penyampaian informasi produk.
+    col1,col2 = st.columns(2)
 
-4. Model Naïve Bayes menghasilkan akurasi sebesar 77%
-dalam mengklasifikasikan caption buzzer dan non-buzzer.
-""")
+    col1.metric("Buzzer","160")
+    col2.metric("Non-Buzzer","958")
 
-st.write("---")
+    st.subheader("Distribusi Dataset")
 
-st.info("""
-Hasil penelitian menunjukkan bahwa caption buzzer cenderung menggunakan
-bahasa persuasif, ajakan pembelian, serta penekanan terhadap promosi produk.
-Sebaliknya, caption non-buzzer lebih banyak berisi pengalaman penggunaan,
-ulasan, dan informasi produk tanpa ajakan pembelian secara langsung.
-""")
+    st.write("""
+    Label 1 : Buzzer (160 data)
 
-st.caption(
-    "Prototype penelitian skripsi Program Studi Sistem Informasi "
-    "Institut Teknologi Mojosari"
-)
+    Label 0 : Non-Buzzer (958 data)
+    """)
+# ==================================
+# PREPROCESSING
+# ==================================
 
-st.subheader("Informasi Model")
+elif menu == "Preprocessing":
 
-st.divider()
+    st.header("Tahapan Preprocessing")
 
-st.markdown("""
-- **Algoritma** : Naïve Bayes
-- **Ekstraksi Fitur** : TF-IDF
-- **Jumlah Data** : 1.118 Data
-- **Data Latih** : 894 Data
-- **Data Uji** : 224 Data
-- **Akurasi** : 77%
-- **Precision** : 76%
-- **Recall** : 85%
-- **F1-Score** : 81%
-""")
+    st.write("""
+    Tahapan preprocessing yang digunakan dalam penelitian:
+    """)
 
-st.divider()
+    st.markdown("""
+    1. Case Folding
+    2. Cleaning
+    3. Normalisasi
+    4. Tokenizing
+    5. Stopword Removal
+    6. Stemming
+    """)
 
-st.markdown("## Analisis Caption Baru")
+    st.image("alur_preprocessing.png")
 
-st.write("""
-Masukkan caption TikTok Shop untuk mengetahui
-hasil klasifikasi buzzer atau non-buzzer berdasarkan
-model hasil penelitian.
-""")
+    st.info("""
+    Tahapan preprocessing bertujuan untuk membersihkan
+    dan menyeragamkan teks sehingga dapat digunakan
+    pada proses ekstraksi fitur TF-IDF.
+    """)
 
-caption = st.text_area(
-    "Masukkan Caption TikTok Shop",
-    height=120
-)
+# ==================================
+# TF-IDF
+# ==================================
 
-if st.button(
-    "🔍 Analisis Caption",
-    use_container_width=True
-):
+elif menu == "TF-IDF":
+
+    st.header("Ekstraksi Fitur TF-IDF")
+
+    st.write("""
+    Ekstraksi fitur dilakukan menggunakan metode TF-IDF
+    untuk mengubah data teks menjadi representasi numerik.
+    """)
+
+    contoh = pd.DataFrame({
+        "Kata":["promo","murah","beli","review","produk"],
+        "Bobot":[0.4123,0.3982,0.3567,0.3021,0.2887]
+    })
+
+    st.table(contoh)
+
+# ==================================
+# EVALUASI
+# ==================================
+
+elif menu == "Evaluasi Model":
+
+    st.header("Evaluasi Model")
+
+    col1,col2,col3,col4 = st.columns(4)
+
+    col1.metric("Accuracy","77%")
+    col2.metric("Precision","76%")
+    col3.metric("Recall","85%")
+    col4.metric("F1 Score","81%")
+
+    st.image("confusion_matrix.png")
+
+    st.write("""
+    Hasil pengujian menunjukkan bahwa model Naïve Bayes
+    mampu mengklasifikasikan caption buzzer dan non-buzzer
+    dengan performa yang cukup baik.
+    """)
+
+# ==================================
+# POLA PROMOSI
+# ==================================
+
+elif menu == "Pola Promosi":
+
+    st.header("Analisis Pola Promosi Produk")
+
+    col1,col2 = st.columns(2)
+
+    with col1:
+
+        st.subheader("Karakteristik Buzzer")
+
+        st.write("""
+        - promo
+        - beli
+        - murah
+        - viral
+        - diskon
+        - keranjang
+        - link
+        - harga
+        """)
+
+    with col2:
+
+        st.subheader("Karakteristik Non-Buzzer")
+
+        st.write("""
+        - review
+        - produk
+        - pakai
+        - skincare
+        - kulit
+        - barang
+        - coba
+        """)
+
+    st.subheader("Temuan Penelitian")
+
+    st.write("""
+    Caption buzzer cenderung menggunakan bahasa persuasif,
+    ajakan pembelian, serta penekanan terhadap manfaat produk.
+
+    Sebaliknya, caption non-buzzer lebih banyak berisi
+    pengalaman penggunaan dan ulasan produk.
+    """)
+
+# ==================================
+# ANALISIS CAPTION
+# ==================================
+
+elif menu == "Analisis Caption":
+
+    caption = st.text_area(
+        "Masukkan Caption TikTok Shop",
+        height=120
+    )
+
+    if st.button(
+        "🔍 Analisis Caption",
+        use_container_width=True
+    ):
+
     if not caption.strip():
         st.warning("Masukkan caption terlebih dahulu.")
         st.stop()
@@ -465,4 +444,94 @@ if st.button(
 
     else:
         st.write("Tidak ada fitur TF-IDF yang terdeteksi.")
+
+st.subheader("Hasil Analisis Pola Promosi")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("### Karakteristik Caption Buzzer")
+
+    st.write("""
+    - banget
+    - beli
+    - murah
+    - viral
+    - promo
+    - keranjang
+    - link
+    - harga
+    """)
+
+with col2:
+    st.markdown("### Karakteristik Caption Non-Buzzer")
+
+    st.write("""
+    - review
+    - jujur
+    - pakai
+    - skincare
+    - kulit
+    - produk
+    - barang
+    """)
+
+st.divider()
+
+st.subheader("Temuan Penelitian")
+
+st.write("""
+1. Dataset penelitian terdiri dari 1.118 caption TikTok Shop yang
+diklasifikasikan menjadi 160 data buzzer dan 958 data non-buzzer.
+
+2. Caption buzzer cenderung menggunakan bahasa yang lebih persuasif
+dan berorientasi pada promosi produk dibandingkan caption non-buzzer.
+
+3. Caption non-buzzer lebih banyak berisi pengalaman penggunaan,
+ulasan, dan penyampaian informasi produk.
+
+4. Model Naïve Bayes menghasilkan akurasi sebesar 77%
+dalam mengklasifikasikan caption buzzer dan non-buzzer.
+""")
+
+st.write("---")
+
+st.info("""
+Hasil penelitian menunjukkan bahwa caption buzzer cenderung menggunakan
+bahasa persuasif, ajakan pembelian, serta penekanan terhadap promosi produk.
+Sebaliknya, caption non-buzzer lebih banyak berisi pengalaman penggunaan,
+ulasan, dan informasi produk tanpa ajakan pembelian secara langsung.
+""")
+
+st.caption(
+    "Prototype penelitian skripsi Program Studi Sistem Informasi "
+    "Institut Teknologi Mojosari"
+)
+
+st.subheader("Informasi Model")
+
+st.divider()
+
+st.markdown("""
+- **Algoritma** : Naïve Bayes
+- **Ekstraksi Fitur** : TF-IDF
+- **Jumlah Data** : 1.118 Data
+- **Data Latih** : 894 Data
+- **Data Uji** : 224 Data
+- **Akurasi** : 77%
+- **Precision** : 76%
+- **Recall** : 85%
+- **F1-Score** : 81%
+""")
+
+st.divider()
+
+st.markdown("## Analisis Caption Baru")
+
+st.write("""
+Masukkan caption TikTok Shop untuk mengetahui
+hasil klasifikasi buzzer atau non-buzzer berdasarkan
+model hasil penelitian.
+""")
+
 
