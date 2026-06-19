@@ -136,7 +136,14 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Prototype Analisis Pola Promosi Produk TikTok Shop")
+st.title(
+    "Analisis Pola Promosi Produk TikTok Shop"
+)
+
+st.caption(
+    "Implementasi Hasil Penelitian Klasifikasi Akun Buzzer "
+    "Menggunakan Algoritma Naïve Bayes"
+)
 st.caption(
     "Implementasi Klasifikasi Buzzer dan Non-Buzzer "
     "Menggunakan Algoritma Naïve Bayes"
@@ -148,142 +155,16 @@ Prototype ini merupakan implementasi hasil penelitian
 untuk Menganalisis Pola Promosi Produk**.
 """)
 
+st.divider()
+st.markdown("## Ringkasan Hasil Penelitian")
+
 col1, col2, col3, col4, col5 = st.columns(5)
 
-col1.metric("Jumlah Data", "1.118")
-col2.metric("Data Latih", "894")
-col3.metric("Data Uji", "224")
-col4.metric("Buzzer", "160")
-col5.metric("Non-Buzzer", "958")
-
-caption = st.text_area(
-    "Masukkan Caption TikTok Shop",
-    height=120
-)
-
-if st.button(
-    "🔍 Analisis Caption",
-    use_container_width=True
-):
-    if not caption.strip():
-        st.warning("Masukkan caption terlebih dahulu.")
-        st.stop()
-
-    case_text = case_folding(caption)
-
-    clean_text = cleaning(case_text)
-
-    normal_text = normalisasi(clean_text)
-
-    token_text = tokenizing(normal_text)
-
-    stopword_text = remove_stopwords(token_text)
-
-    stem_text = stemming(stopword_text)
-
-    st.divider()
-    st.subheader("Tahapan Preprocessing")
-
-    with st.expander("0. Caption Asli"):
-        st.write(caption)
-
-    with st.expander("1. Case Folding"):
-        st.write(case_text)
-
-    with st.expander("2. Cleaning"):
-        st.write(clean_text)
-
-    with st.expander("3. Normalisasi"):
-        st.write(normal_text)
-
-    with st.expander("4. Tokenizing"):
-        st.write(token_text)
-
-    with st.expander("5. Stopword Removal"):
-        st.write(stopword_text)
-
-    with st.expander("6. Stemming"):
-        st.write(stem_text)
-
-    data = tfidf.transform([stem_text])
-
-    st.subheader("Hasil Ekstraksi Fitur TF-IDF")
-
-    feature_names = tfidf.get_feature_names_out()
-
-    scores = data.toarray()[0]
-
-    hasil_tfidf = []
-
-    for kata, skor in zip(feature_names, scores):
-        if skor > 0:
-            hasil_tfidf.append((kata, round(float(skor), 4)))
-
-    hasil_tfidf = sorted(
-        hasil_tfidf,
-        key=lambda x: x[1],
-        reverse=True
-    )
-
-    if len(hasil_tfidf) > 0:
-
-        df_tfidf = pd.DataFrame(
-           hasil_tfidf[:10],
-           columns=["Kata", "Bobot TF-IDF"]
-    )
-
-        st.table(df_tfidf)
-
-    else:
-        st.write("Tidak ada fitur TF-IDF yang terdeteksi.")
-
-    hasil = model.predict(data)[0]
-
-    prob = model.predict_proba(data)[0]
-
-    st.divider()
-    st.subheader("Hasil Klasifikasi")
-
-    if hasil == 1:
-        st.error("⚠️ BUZZER")
-
-        st.write("""
-        Berdasarkan hasil klasifikasi model, caption ini memiliki
-        karakteristik promosi yang umum ditemukan pada kategori buzzer.
-        """)
-
-    else:
-
-        st.success("✅ NON-BUZZER")
-
-        st.write("""
-        Berdasarkan hasil klasifikasi model, caption ini lebih
-        menunjukkan pola ulasan dan pengalaman penggunaan produk.
-        """)
-
-    st.divider()
-    st.subheader("Probabilitas Klasifikasi")
-
-    st.write(f"Label Non-Buzzer : {prob[0]*100:.2f}%")
-    st.write(f"Label Buzzer : {prob[1]*100:.2f}%")
-
-st.write("---")
-
-st.subheader("Informasi Model")
-
-st.markdown("""
-- **Algoritma** : Naïve Bayes
-- **Ekstraksi Fitur** : TF-IDF
-- **Jumlah Data** : 1.118 Data
-- **Data Latih** : 894 Data
-- **Data Uji** : 224 Data
-- **Akurasi** : 77%
-- **Precision** : 76%
-- **Recall** : 85%
-- **F1-Score** : 81%
-""")
-
-st.write("---")
+col1.metric("Dataset", "1.118")
+col2.metric("Buzzer", "160")
+col3.metric("Non-Buzzer", "958")
+col4.metric("Akurasi", "77%")
+col5.metric("F1-Score", "81%")
 
 st.subheader("Hasil Analisis Pola Promosi")
 
@@ -316,6 +197,24 @@ with col2:
     - barang
     """)
 
+st.divider()
+
+st.subheader("Temuan Penelitian")
+
+st.write("""
+1. Dataset penelitian terdiri dari 1.118 caption TikTok Shop yang
+diklasifikasikan menjadi 160 data buzzer dan 958 data non-buzzer.
+
+2. Caption buzzer cenderung menggunakan bahasa yang lebih persuasif
+dan berorientasi pada promosi produk dibandingkan caption non-buzzer.
+
+3. Caption non-buzzer lebih banyak berisi pengalaman penggunaan,
+ulasan, dan penyampaian informasi produk.
+
+4. Model Naïve Bayes menghasilkan akurasi sebesar 77%
+dalam mengklasifikasikan caption buzzer dan non-buzzer.
+""")
+
 st.write("---")
 
 st.info("""
@@ -324,31 +223,146 @@ bahasa persuasif, ajakan pembelian, serta penekanan terhadap promosi produk.
 Sebaliknya, caption non-buzzer lebih banyak berisi pengalaman penggunaan,
 ulasan, dan informasi produk tanpa ajakan pembelian secara langsung.
 """)
-st.subheader("Temuan Penelitian")
-
-st.write("""
-Berdasarkan hasil klasifikasi terhadap 1.118 caption TikTok Shop,
-ditemukan bahwa kategori buzzer cenderung menggunakan kata-kata
-yang bersifat persuasif dan berorientasi pada penjualan, seperti
-'promo', 'beli', 'murah', 'viral', 'keranjang', dan 'harga'.
-
-Sebaliknya, kategori non-buzzer lebih banyak menggunakan bahasa
-yang berfokus pada pengalaman penggunaan produk, ulasan, dan
-penyampaian informasi kepada pengguna lain.
-
-Hasil penelitian menunjukkan bahwa pola promosi akun buzzer
-ditandai dengan adanya penekanan terhadap manfaat produk,
-ajakan pembelian, serta penggunaan kata-kata promosi yang
-lebih intens dibandingkan akun non-buzzer.
-
-Model Naïve Bayes yang digunakan dalam penelitian ini mampu
-mengklasifikasikan caption ke dalam kategori buzzer dan
-non-buzzer dengan tingkat akurasi sebesar 77%, sehingga
-dapat digunakan untuk membantu mengidentifikasi pola promosi
-produk pada TikTok Shop.
-""")
 
 st.caption(
     "Prototype penelitian skripsi Program Studi Sistem Informasi "
     "Institut Teknologi Mojosari"
 )
+
+st.subheader("Informasi Model")
+
+st.divider()
+
+st.markdown("""
+- **Algoritma** : Naïve Bayes
+- **Ekstraksi Fitur** : TF-IDF
+- **Jumlah Data** : 1.118 Data
+- **Data Latih** : 894 Data
+- **Data Uji** : 224 Data
+- **Akurasi** : 77%
+- **Precision** : 76%
+- **Recall** : 85%
+- **F1-Score** : 81%
+""")
+
+st.divider()
+
+st.markdown("## Analisis Caption Baru")
+
+st.write("""
+Masukkan caption TikTok Shop untuk mengetahui
+hasil klasifikasi buzzer atau non-buzzer berdasarkan
+model hasil penelitian.
+""")
+
+caption = st.text_area(
+    "Masukkan Caption TikTok Shop",
+    height=120
+)
+
+if st.button(
+    "🔍 Analisis Caption",
+    use_container_width=True
+):
+    if not caption.strip():
+        st.warning("Masukkan caption terlebih dahulu.")
+        st.stop()
+
+    case_text = case_folding(caption)
+
+    clean_text = cleaning(case_text)
+
+    normal_text = normalisasi(clean_text)
+
+    token_text = tokenizing(normal_text)
+
+    stopword_text = remove_stopwords(token_text)
+
+    stem_text = stemming(stopword_text)
+
+    data = tfidf.transform([stem_text])
+
+    hasil = model.predict(data)[0]
+    
+    prob = model.predict_proba(data)[0]
+
+    st.divider()
+    st.subheader("Hasil Klasifikasi")
+
+    if hasil == 1:
+        st.error("⚠️ BUZZER")
+
+        st.write("""
+        Berdasarkan hasil klasifikasi model, caption ini memiliki
+        karakteristik promosi yang umum ditemukan pada kategori buzzer.
+        """)
+
+    else:
+
+        st.success("✅ NON-BUZZER")
+
+        st.write("""
+        Berdasarkan hasil klasifikasi model, caption ini lebih
+        menunjukkan pola ulasan dan pengalaman penggunaan produk.
+        """)
+
+    st.divider()
+    st.subheader("Probabilitas Klasifikasi")
+
+    st.write(f"Label Non-Buzzer : {prob[0]*100:.2f}%")
+    st.write(f"Label Buzzer : {prob[1]*100:.2f}%")
+
+    st.divider()
+    st.subheader("Tahapan Preprocessing")
+
+    with st.expander("0. Caption Asli"):
+        st.write(caption)
+
+    with st.expander("1. Case Folding"):
+        st.write(case_text)
+
+    with st.expander("2. Cleaning"):
+        st.write(clean_text)
+
+    with st.expander("3. Normalisasi"):
+        st.write(normal_text)
+
+    with st.expander("4. Tokenizing"):
+        st.write(token_text)
+
+    with st.expander("5. Stopword Removal"):
+        st.write(stopword_text)
+
+    with st.expander("6. Stemming"):
+        st.write(stem_text)
+
+    st.subheader("Hasil Ekstraksi Fitur TF-IDF")
+
+    feature_names = tfidf.get_feature_names_out()
+
+    scores = data.toarray()[0]
+
+    hasil_tfidf = []
+
+    for kata, skor in zip(feature_names, scores):
+        if skor > 0:
+            hasil_tfidf.append((kata, round(float(skor), 4)))
+
+    hasil_tfidf = sorted(
+        hasil_tfidf,
+        key=lambda x: x[1],
+        reverse=True
+    )
+
+    if len(hasil_tfidf) > 0:
+
+        df_tfidf = pd.DataFrame(
+           hasil_tfidf[:10],
+           columns=["Kata", "Bobot TF-IDF"]
+    )
+
+        st.table(df_tfidf)
+
+    else:
+        st.write("Tidak ada fitur TF-IDF yang terdeteksi.")
+
