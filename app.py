@@ -236,7 +236,7 @@ if menu == "Dashboard":
     col1, col2 = st.columns(2)
     
     with col1:
-        if st.button(
+    if st.button(
         "📊 Lihat Hasil Penelitian",
         use_container_width=True
     ):
@@ -251,35 +251,6 @@ if menu == "Dashboard":
         "🔍 Mulai Analisis Caption",
         use_container_width=True
     ):
-        st.info("""
-        Silakan pilih menu
-        Analisis Caption
-        pada sidebar.
-        """)
-
-    col1, col2 = st.columns(2)
-
-       with col1:
-
-    if st.button(
-        "📊 Lihat Hasil Penelitian",
-        use_container_width=True
-    ):
-
-        st.info("""
-        Silakan pilih menu Dataset,
-        Preprocessing, TF-IDF,
-        Evaluasi Model, atau
-        Pola Promosi pada sidebar.
-        """)
-
-with col2:
-
-    if st.button(
-        "🔍 Mulai Analisis Caption",
-        use_container_width=True
-    ):
-
         st.info("""
         Silakan pilih menu
         Analisis Caption
@@ -354,7 +325,7 @@ elif menu == "Preprocessing":
 
     st.subheader("Tahapan yang Digunakan")
     st.table(
-        pd.DataFrame(
+        pd.DataFrame({
             "Tahap":[
                 "Case Folding",
                 "Cleaning",
@@ -362,8 +333,9 @@ elif menu == "Preprocessing":
                 "Tokenizing",
                 "Stopword Removal",
                 "Stemming"
-            ]
-            })
+             ]
+        })
+)
     )
 
     st.info("""
@@ -476,31 +448,31 @@ elif menu == "Pola Promosi":
         - coba
         """)
 
-    st.subheader("Temuan Penelitian")
+        st.subheader("Temuan Penelitian")
 
-    st.write("""
-    Caption buzzer cenderung menggunakan bahasa persuasif,
-    ajakan pembelian, serta penekanan terhadap manfaat produk.
+        st.write("""
+        Caption buzzer cenderung menggunakan bahasa persuasif,
+        ajakan pembelian, serta penekanan terhadap manfaat produk.
 
-    Sebaliknya, caption non-buzzer lebih banyak berisi
-    pengalaman penggunaan dan ulasan produk.
-    """)
+        Sebaliknya, caption non-buzzer lebih banyak berisi
+        pengalaman penggunaan dan ulasan produk.
+        """)
 
-   st.success("""
-   Pola promosi akun buzzer ditandai dengan:
+       st.success("""
+       Pola promosi akun buzzer ditandai dengan:
 
-   • Penggunaan kata promosi yang kuat
+       • Penggunaan kata promosi yang kuat
+    
+       • Ajakan pembelian secara langsung
 
-   • Ajakan pembelian secara langsung
+       • Penekanan manfaat produk
 
-   • Penekanan manfaat produk
+       • Bahasa yang lebih persuasif
 
-   • Bahasa yang lebih persuasif
-
-   Sedangkan akun non-buzzer
-   lebih berfokus pada ulasan
-   dan pengalaman penggunaan produk.
-   """)
+       Sedangkan akun non-buzzer
+       lebih berfokus pada ulasan
+       dan pengalaman penggunaan produk.
+       """)
 
 
 # ==================================
