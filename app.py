@@ -236,10 +236,10 @@ if menu == "Dashboard":
     col1, col2 = st.columns(2)
     
     with col1:
-    if st.button(
-        "📊 Lihat Hasil Penelitian",
-        use_container_width=True
-    ):
+        if st.button(
+            "📊 Lihat Hasil Penelitian",
+            use_container_width=True
+        ):
         st.info("""
         Silakan pilih menu Dataset,
         Preprocessing, TF-IDF,
@@ -248,9 +248,9 @@ if menu == "Dashboard":
         """)
     with col2:
         if st.button(
-        "🔍 Mulai Analisis Caption",
-        use_container_width=True
-    ):
+            "🔍 Mulai Analisis Caption",
+            use_container_width=True
+        ):
         st.info("""
         Silakan pilih menu
         Analisis Caption
@@ -336,7 +336,6 @@ elif menu == "Preprocessing":
              ]
         })
 )
-    )
 
     st.info("""
     Tahapan preprocessing bertujuan untuk membersihkan
@@ -448,31 +447,31 @@ elif menu == "Pola Promosi":
         - coba
         """)
 
-        st.subheader("Temuan Penelitian")
+    st.subheader("Temuan Penelitian")
 
-        st.write("""
-        Caption buzzer cenderung menggunakan bahasa persuasif,
-        ajakan pembelian, serta penekanan terhadap manfaat produk.
+    st.write("""
+    Caption buzzer cenderung menggunakan bahasa persuasif,
+    ajakan pembelian, serta penekanan terhadap manfaat produk.
 
-        Sebaliknya, caption non-buzzer lebih banyak berisi
-        pengalaman penggunaan dan ulasan produk.
-        """)
+    Sebaliknya, caption non-buzzer lebih banyak berisi
+    pengalaman penggunaan dan ulasan produk.
+    """)
 
-       st.success("""
-       Pola promosi akun buzzer ditandai dengan:
+    st.success("""
+    Pola promosi akun buzzer ditandai dengan:
 
-       • Penggunaan kata promosi yang kuat
+    • Penggunaan kata promosi yang kuat
     
-       • Ajakan pembelian secara langsung
+    • Ajakan pembelian secara langsung
 
-       • Penekanan manfaat produk
+    • Penekanan manfaat produk
 
-       • Bahasa yang lebih persuasif
+    • Bahasa yang lebih persuasif
 
-       Sedangkan akun non-buzzer
-       lebih berfokus pada ulasan
-       dan pengalaman penggunaan produk.
-       """)
+    Sedangkan akun non-buzzer
+    lebih berfokus pada ulasan
+    dan pengalaman penggunaan produk.
+    """)
 
 
 # ==================================
