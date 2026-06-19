@@ -312,17 +312,6 @@ elif menu == "Preprocessing":
     Tahapan preprocessing yang digunakan dalam penelitian:
     """)
 
-    st.markdown("""
-    1. Case Folding
-    2. Cleaning
-    3. Normalisasi
-    4. Tokenizing
-    5. Stopword Removal
-    6. Stemming
-    """)
-
-    st.image("alur_preprocessing.png")
-
     st.subheader("Tahapan yang Digunakan")
     tahapan_df = pd.DataFrame({
         "Tahap":[
