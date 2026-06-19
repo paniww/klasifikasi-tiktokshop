@@ -240,22 +240,22 @@ if menu == "Dashboard":
             "📊 Lihat Hasil Penelitian",
             use_container_width=True
         ):
-        st.info("""
-        Silakan pilih menu Dataset,
-        Preprocessing, TF-IDF,
-        Evaluasi Model, atau
-        Pola Promosi pada sidebar.
-        """)
+            st.info("""
+            Silakan pilih menu Dataset,
+            Preprocessing, TF-IDF,
+            Evaluasi Model, atau
+            Pola Promosi pada sidebar.
+            """)
     with col2:
         if st.button(
             "🔍 Mulai Analisis Caption",
             use_container_width=True
         ):
-        st.info("""
-        Silakan pilih menu
-        Analisis Caption
-        pada sidebar.
-        """)
+            st.info("""
+            Silakan pilih menu
+            Analisis Caption
+            pada sidebar.
+            """)
 
 # ==================================
 # DATASET
@@ -324,18 +324,18 @@ elif menu == "Preprocessing":
     st.image("alur_preprocessing.png")
 
     st.subheader("Tahapan yang Digunakan")
-    st.table(
-        pd.DataFrame({
-            "Tahap":[
-                "Case Folding",
-                "Cleaning",
-                "Normalisasi",
-                "Tokenizing",
-                "Stopword Removal",
-                "Stemming"
-             ]
-        })
-)
+    tahapan_df = pd.DataFrame({
+        "Tahap":[
+            "Case Folding",
+            "Cleaning",
+            "Normalisasi",
+            "Tokenizing",
+            "Stopword Removal",
+            "Stemming"
+        ]
+    })
+
+    st.table(tahapan_df)
 
     st.info("""
     Tahapan preprocessing bertujuan untuk membersihkan
