@@ -216,8 +216,8 @@ if menu == "Dashboard":
     col1,col2,col3,col4,col5 = st.columns(5)
 
     col1.metric("Dataset","1.118")
-    col2.metric("Buzzer","160")
-    col3.metric("Non-Buzzer","958")
+    col2.metric("Buzzer","637")
+    col3.metric("Non-Buzzer","481")
     col4.metric("Akurasi","77%")
     col5.metric("F1-Score","81%")
 
@@ -272,15 +272,15 @@ elif menu == "Dataset":
 
     col1,col2 = st.columns(2)
 
-    col1.metric("Buzzer","160")
-    col2.metric("Non-Buzzer","958")
+    col1.metric("Buzzer","637")
+    col2.metric("Non-Buzzer","481")
 
     st.subheader("Distribusi Dataset")
 
     st.write("""
-    Label 1 : Buzzer (160 data)
+    Label 1 : Buzzer (637 data)
 
-    Label 0 : Non-Buzzer (958 data)
+    Label 0 : Non-Buzzer (481 data)
     """)
     st.divider()
     st.markdown(""" 
