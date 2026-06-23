@@ -321,6 +321,14 @@ elif menu == "Preprocessing":
             "Tokenizing",
             "Stopword Removal",
             "Stemming"
+        ],
+        "Keterangan":[
+            "Mengubah seluruh huruf menjadi huruf kecil.",
+            "Menghapus URL, hashtag, mention, angka, dan karakter yang tidak diperlukan.",
+            "Mengubah kata tidak baku menjadi kata baku sesuai kamus normalisasi.",
+            "Memecah kalimat menjadi token atau kata-kata tunggal.",
+            "Menghapus kata yang tidak memiliki pengaruh signifikan terhadap klasifikasi.",
+            "Mengubah kata berimbuhan menjadi bentuk kata dasar."
         ]
     })
 
@@ -447,19 +455,7 @@ elif menu == "Pola Promosi":
     """)
 
     st.success("""
-    Pola promosi akun buzzer ditandai dengan:
-
-    • Penggunaan kata promosi yang kuat
-    
-    • Ajakan pembelian secara langsung
-
-    • Penekanan manfaat produk
-
-    • Bahasa yang lebih persuasif
-
-    Sedangkan akun non-buzzer
-    lebih berfokus pada ulasan
-    dan pengalaman penggunaan produk.
+    Pola promosi akun buzzer ditandai dengan Penggunaan kata promosi yang kuat, ajakan pembelian secara langsung, penekanan manfaat produk, dan bahasa yang lebih persuasif. Sedangkan akun non-buzzer lebih berfokus pada ulasan dan pengalaman penggunaan produk.
     """)
 
 
