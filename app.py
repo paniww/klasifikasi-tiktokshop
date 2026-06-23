@@ -205,7 +205,7 @@ if menu == "Dashboard":
     </div>
     """, unsafe_allow_html=True)
 
-    st.title("Analisis Pola Promosi Produk TikTok Shop")
+    st.subheader("Deskripsi Sistem")
 
     st.write("""
     Sistem ini merupakan implementasi hasil penelitian
@@ -224,38 +224,19 @@ if menu == "Dashboard":
     st.subheader("Ringkasan Hasil Penelitian")
 
     st.write("""
-    Penelitian dilakukan terhadap 1.118 caption TikTok Shop.
-    Hasil klasifikasi menunjukkan bahwa caption buzzer
-    cenderung menggunakan bahasa persuasif dan berorientasi
-    pada promosi produk, sedangkan caption non-buzzer lebih
-    banyak berisi pengalaman penggunaan dan ulasan produk.
+    Penelitian ini menggunakan 1.118 caption TikTok Shop yang
+    telah dilabeli menjadi 637 data buzzer dan 481 data non-buzzer.
+    Hasil pengujian menunjukkan bahwa model Naïve Bayes memperoleh
+    akurasi sebesar 77% dan F1-score sebesar 81%.
+    Berdasarkan hasil klasifikasi, caption buzzer cenderung
+    menggunakan bahasa persuasif dan ajakan pembelian,
+    sedangkan caption non-buzzer lebih banyak berisi ulasan
+    dan pengalaman penggunaan produk.
     """)
-
-    st.divider()
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        if st.button(
-            "📊 Lihat Hasil Penelitian",
-            use_container_width=True
-        ):
-            st.info("""
-            Silakan pilih menu Dataset,
-            Preprocessing, TF-IDF,
-            Evaluasi Model, atau
-            Pola Promosi pada sidebar.
-            """)
-    with col2:
-        if st.button(
-            "🔍 Mulai Analisis Caption",
-            use_container_width=True
-        ):
-            st.info("""
-            Silakan pilih menu
-            Analisis Caption
-            pada sidebar.
-            """)
+    st.markdown("""
+    1. Mengklasifikasikan caption buzzer dan non-buzzer pada TikTok Shop menggunakan algoritma Naïve Bayes.
+    2. Menganalisis pola promosi produk berdasarkan hasil klasifikasi caption.
+    """)
 
 # ==================================
 # DATASET
@@ -270,35 +251,37 @@ elif menu == "Dataset":
     yang telah melalui proses seleksi dan pelabelan data.
     """)
 
-    col1,col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
-    col1.metric("Buzzer","637")
-    col2.metric("Non-Buzzer","481")
+    col1.metric("Total Dataset", "1.118")
+    col2.metric("Buzzer", "637")
+    col3.metric("Non-Buzzer", "481")
 
     st.subheader("Distribusi Dataset")
 
-    st.write("""
-    Label 1 : Buzzer (637 data)
+    st.table(pd.DataFrame({
+        "Label":[1,0],
+        "Kategori":["Buzzer","Non-Buzzer"],
+        "Jumlah":[637,481]
+    }))
+    
+    col1, col2 = st.columns(2)
 
-    Label 0 : Non-Buzzer (481 data)
-    """)
+    col1.metric("Persentase Buzzer", "56,98%")
+    col2.metric("Persentase Non-Buzzer", "43,02%")
+    st.subheader("Pembagian Data")
+
+    col1, col2 = st.columns(2)
+
+    col1.metric("Data Latih (80%)", "894")
+    col2.metric("Data Uji (20%)", "224")
+    
     st.divider()
     st.markdown(""" 
     ### Deskripsi Dataset
 
-    Dataset penelitian terdiri dari 1.118 caption
-    TikTok Shop yang diperoleh melalui proses
-    pengumpulan data, seleksi data,
-    preprocessing, dan pelabelan manual.
-
-    Data kemudian dibagi menjadi
-    894 data latih dan 224 data uji
-    untuk proses klasifikasi menggunakan
-    algoritma Naïve Bayes.
+    Dataset penelitian terdiri dari 1.118 caption TikTok Shop yang diperoleh melalui proses pengumpulan data, seleksi data, dan pelabelan manual. Dataset tersebut terdiri dari 637 data buzzer dan 481 data non-buzzer yang digunakan dalam proses pelatihan dan pengujian model.
     """)
-
-
-
 
 # ==================================
 # PREPROCESSING
@@ -349,29 +332,63 @@ elif menu == "TF-IDF":
     st.header("Ekstraksi Fitur TF-IDF")
 
     st.write("""
-    Ekstraksi fitur dilakukan menggunakan metode TF-IDF
-    untuk mengubah data teks menjadi representasi numerik.
+    Ekstraksi fitur TF-IDF digunakan untuk mengubah data caption
+    hasil preprocessing menjadi representasi numerik yang dapat
+    digunakan oleh algoritma Naïve Bayes dalam proses klasifikasi.
     """)
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric("Jumlah Data", "1.118")
+    col2.metric("Metode", "TF-IDF")
+    col3.metric("Fitur Teks", "Representasi Numerik")
+    
+    st.subheader("Contoh Hasil Ekstraksi TF-IDF")
 
     contoh = pd.DataFrame({
-        "Kata":[
-            "banget",
-            "produk",
-            "promo",
-            "murah",
-            "review"
+        "Username":[
+            "fluffyaa",
+            "sffhjiri",
+            "cempaka465",
+            "dokterdetektifhero",
+            "review_skincare"
         ],
-        "Bobot TF-IDF":[
-            0.421,
-            0.387,
-            0.355,
-            0.311,
-            0.287
-        
+        "Pakai":[
+            0,
+            0,
+            0.1304,
+            0.0404,
+            0.2552
+        ],
+        "Hasil":[
+            0,
+            0.1102,
+            0,
+            0.0764,
+            0
+        ],
+        "Cakep":[
+            0.4809,
+            0,
+            0,
+            0,
+            0.2859
         ]
     })
+    
+    st.dataframe(
+        contoh_tfidf,
+        use_container_width=True
+    )
 
     st.table(contoh)
+    
+    st.info("""
+    Tabel di atas menunjukkan hasil ekstraksi fitur TF-IDF
+    dari beberapa caption TikTok Shop. Nilai TF-IDF yang
+    lebih besar menunjukkan bahwa suatu kata memiliki
+    kontribusi yang lebih tinggi terhadap representasi
+    dokumen dibandingkan kata lainnya.
+    """)
 
 # ==================================
 # EVALUASI
@@ -380,29 +397,54 @@ elif menu == "TF-IDF":
 elif menu == "Evaluasi Model":
 
     st.header("Evaluasi Model")
+    
+    st.write("""
+    Evaluasi model dilakukan menggunakan confusion matrix
+    serta metrik accuracy, precision, recall, dan F1-score
+    untuk mengukur performa klasifikasi caption buzzer dan non-buzzer.
+    """)
+    
+    col1, col2, col3, col4 = st.columns(4)
 
-    col1,col2,col3,col4 = st.columns(4)
+    col1.metric("Accuracy", "77%")
+    col2.metric("Precision", "76%")
+    col3.metric("Recall", "85%")
+    col4.metric("F1 Score", "81%")
 
-    col1.metric("Accuracy","77%")
-    col2.metric("Precision","76%")
-    col3.metric("Recall","85%")
-    col4.metric("F1 Score","81%")
+    st.subheader("Confusion Matrix")
 
-    st.image("confusion_matrix.png")
+    st.image(
+        "confusion_matrix.png",
+        use_container_width=True
+    )
+
+    st.subheader("Ringkasan Confusion Matrix")
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric("TP", "110")
+    col2.metric("TN", "63")
+    col3.metric("FP", "33")
+    col4.metric("FN", "18")
 
     st.success("""
-    Model Naïve Bayes menghasilkan:
-    
-    Accuracy : 77%
-    Precision : 76%
-    Recall : 85%
-    F1-Score : 81%
+    Model Naïve Bayes menghasilkan performa klasifikasi yang cukup baik
+    dengan Accuracy 77%, Precision 76%, Recall 85%, dan F1-Score 81%.
+    """)
+
+    st.info("""
+    Accuracy menunjukkan tingkat ketepatan model secara keseluruhan.
+    Precision menunjukkan ketepatan model dalam memprediksi kelas buzzer.
+    Recall menunjukkan kemampuan model dalam mengenali data buzzer.
+    F1-Score merupakan kombinasi antara precision dan recall.
     """)
 
     st.write("""
-    Hasil pengujian menunjukkan bahwa model Naïve Bayes
-    mampu mengklasifikasikan caption buzzer dan non-buzzer
-    dengan performa yang cukup baik.
+    Berdasarkan hasil evaluasi, model memiliki nilai recall sebesar 85%
+    yang menunjukkan bahwa model mampu mengenali sebagian besar caption
+    buzzer dengan baik. Nilai accuracy sebesar 77% menunjukkan bahwa
+    model dapat mengklasifikasikan caption buzzer dan non-buzzer dengan
+    performa yang cukup baik.
     """)
 
 # ==================================
