@@ -376,11 +376,9 @@ elif menu == "TF-IDF":
     })
     
     st.dataframe(
-        contoh_tfidf,
+        contoh,
         use_container_width=True
     )
-
-    st.table(contoh)
     
     st.info("""
     Tabel di atas menunjukkan hasil ekstraksi fitur TF-IDF
