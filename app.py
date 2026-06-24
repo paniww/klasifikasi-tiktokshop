@@ -450,60 +450,57 @@ elif menu == "Evaluasi Model":
 # ==================================
 
 elif menu == "Pola Promosi":
+elif menu == "Pola Promosi":
 
     st.header("Analisis Pola Promosi Produk")
-    
+
     st.write("""
     Halaman ini menampilkan hasil analisis pola promosi produk
     berdasarkan caption yang telah diklasifikasikan menggunakan
     algoritma Naïve Bayes.
     """)
 
-    col1,col2 = st.columns(2)
+    st.subheader("Karakteristik Caption")
 
-    with col1:
+    karakteristik = pd.DataFrame({
+        "Buzzer":[
+            "promo",
+            "beli",
+            "murah",
+            "viral",
+            "diskon",
+            "keranjang",
+            "link",
+            "harga"
+        ],
+        "Non-Buzzer":[
+            "review",
+            "produk",
+            "pakai",
+            "skincare",
+            "kulit",
+            "barang",
+            "coba",
+            "-"
+        ]
+    })
 
-        st.subheader("Karakteristik Caption")
+    st.table(karakteristik)
 
-        karakteristik = pd.DataFrame({
-            "Buzzer":[
-                 "promo",
-                "beli",
-                "murah",
-                "viral",
-                "diskon",
-                "keranjang",
-                "link",
-                "harga"
-            ],
-            "Non-Buzzer":[
-                "review",
-                "produk",
-                "pakai",
-                "skincare",
-                "kulit",
-                "barang",
-                "coba",
-                "-"
-            ]
-        })
-        
-        st.subheader("Hasil Analisis Pola Promosi Produk")
+    st.subheader("Hasil Analisis Pola Promosi Produk")
 
-        hasil_pola = pd.DataFrame({
-            "Kategori":[
-                "Buzzer",
-                "Non-Buzzer"
-            ],
-            "Karakteristik":[
-                "Menggunakan kata promosi, ajakan pembelian, dan penekanan manfaat produk",
-                "Berisi ulasan, pengalaman penggunaan, dan opini pengguna"
-            ]
-        })
+    hasil_pola = pd.DataFrame({
+        "Kategori":[
+            "Buzzer",
+            "Non-Buzzer"
+        ],
+        "Karakteristik":[
+            "Menggunakan kata promosi, ajakan pembelian, dan penekanan manfaat produk",
+            "Berisi ulasan, pengalaman penggunaan, dan opini pengguna"
+        ]
+    })
 
-st.table(hasil_pola)
-
-st.table(karakteristik)
+    st.table(hasil_pola)
 
     st.subheader("Temuan Penelitian")
 
