@@ -340,7 +340,7 @@ elif menu == "TF-IDF":
 
     col1.metric("Jumlah Data", "1.118")
     col2.metric("Metode", "TF-IDF")
-    col3.metric("Fitur Teks", "Representasi Numerik")
+    col3.metric("Output", "Vektor")
     
     st.subheader("Contoh Hasil Ekstraksi TF-IDF")
 
@@ -449,7 +449,6 @@ elif menu == "Evaluasi Model":
 # POLA PROMOSI
 # ==================================
 
-elif menu == "Pola Promosi":
 elif menu == "Pola Promosi":
 
     st.header("Analisis Pola Promosi Produk")
