@@ -452,50 +452,75 @@ elif menu == "Evaluasi Model":
 elif menu == "Pola Promosi":
 
     st.header("Analisis Pola Promosi Produk")
+    
+    st.write("""
+    Halaman ini menampilkan hasil analisis pola promosi produk
+    berdasarkan caption yang telah diklasifikasikan menggunakan
+    algoritma Naïve Bayes.
+    """)
 
     col1,col2 = st.columns(2)
 
     with col1:
 
-        st.subheader("Karakteristik Buzzer")
+        st.subheader("Karakteristik Caption")
 
-        st.write("""
-        - promo
-        - beli
-        - murah
-        - viral
-        - diskon
-        - keranjang
-        - link
-        - harga
-        """)
+        karakteristik = pd.DataFrame({
+            "Buzzer":[
+                 "promo",
+                "beli",
+                "murah",
+                "viral",
+                "diskon",
+                "keranjang",
+                "link",
+                "harga"
+            ],
+            "Non-Buzzer":[
+                "review",
+                "produk",
+                "pakai",
+                "skincare",
+                "kulit",
+                "barang",
+                "coba",
+                "-"
+            ]
+        })
+        
+        st.subheader("Hasil Analisis Pola Promosi Produk")
 
-    with col2:
+        hasil_pola = pd.DataFrame({
+            "Kategori":[
+                "Buzzer",
+                "Non-Buzzer"
+            ],
+            "Karakteristik":[
+                "Menggunakan kata promosi, ajakan pembelian, dan penekanan manfaat produk",
+                "Berisi ulasan, pengalaman penggunaan, dan opini pengguna"
+            ]
+        })
 
-        st.subheader("Karakteristik Non-Buzzer")
+st.table(hasil_pola)
 
-        st.write("""
-        - review
-        - produk
-        - pakai
-        - skincare
-        - kulit
-        - barang
-        - coba
-        """)
+st.table(karakteristik)
 
     st.subheader("Temuan Penelitian")
 
-    st.write("""
+    st.info("""
     Caption buzzer cenderung menggunakan bahasa persuasif,
-    ajakan pembelian, serta penekanan terhadap manfaat produk.
-
-    Sebaliknya, caption non-buzzer lebih banyak berisi
-    pengalaman penggunaan dan ulasan produk.
+    ajakan pembelian secara langsung, serta penekanan terhadap
+    keunggulan produk. Sebaliknya, caption non-buzzer lebih
+    banyak berisi pengalaman penggunaan, ulasan produk,
+    dan informasi yang bersifat deskriptif.
     """)
 
     st.success("""
-    Pola promosi akun buzzer ditandai dengan Penggunaan kata promosi yang kuat, ajakan pembelian secara langsung, penekanan manfaat produk, dan bahasa yang lebih persuasif. Sedangkan akun non-buzzer lebih berfokus pada ulasan dan pengalaman penggunaan produk.
+    Berdasarkan hasil klasifikasi, pola promosi akun buzzer
+    ditandai dengan penggunaan kata promosi yang kuat,
+    ajakan pembelian secara langsung, dan penekanan manfaat produk.
+    Sementara itu, akun non-buzzer lebih berfokus pada ulasan
+    serta pengalaman penggunaan produk.
     """)
 
 
