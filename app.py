@@ -199,7 +199,7 @@ if menu == "Dashboard":
     ">
     <h1>Analisis Pola Promosi Produk TikTok Shop</h1>
     <p>
-    Implementasi Klasifikasi Akun Buzzer Menggunakan
+    Implementasi Klasifikasi Akun Promosi Menggunakan
     Algoritma Naïve Bayes
     </p>
     </div>
@@ -209,7 +209,7 @@ if menu == "Dashboard":
 
     st.write("""
     Sistem ini merupakan implementasi hasil penelitian
-    klasifikasi akun buzzer pada TikTok Shop menggunakan
+    klasifikasi akun promosi pada TikTok Shop menggunakan
     algoritma Naïve Bayes untuk menganalisis pola promosi produk.
     """)
 
@@ -228,13 +228,13 @@ if menu == "Dashboard":
     telah dilabeli menjadi 637 data buzzer dan 481 data non-buzzer.
     Hasil pengujian menunjukkan bahwa model Naïve Bayes memperoleh
     akurasi sebesar 77% dan F1-score sebesar 81%.
-    Berdasarkan hasil klasifikasi, caption buzzer cenderung
+    Berdasarkan hasil klasifikasi, caption promosi cenderung
     menggunakan bahasa persuasif dan ajakan pembelian,
-    sedangkan caption non-buzzer lebih banyak berisi ulasan
+    sedangkan caption non-promosi lebih banyak berisi ulasan
     dan pengalaman penggunaan produk.
     """)
     st.markdown("""
-    1. Mengklasifikasikan caption buzzer dan non-buzzer pada TikTok Shop menggunakan algoritma Naïve Bayes.
+    1. Mengklasifikasikan caption promosi dan non-promosi pada TikTok Shop menggunakan algoritma Naïve Bayes.
     2. Menganalisis pola promosi produk berdasarkan hasil klasifikasi caption.
     """)
 
@@ -254,21 +254,21 @@ elif menu == "Dataset":
     col1, col2, col3 = st.columns(3)
 
     col1.metric("Total Dataset", "1.118")
-    col2.metric("Buzzer", "637")
-    col3.metric("Non-Buzzer", "481")
+    col2.metric("Promosi", "637")
+    col3.metric("Non-Promosi", "481")
 
     st.subheader("Distribusi Dataset")
 
     st.table(pd.DataFrame({
         "Label":[1,0],
-        "Kategori":["Buzzer","Non-Buzzer"],
+        "Kategori":["Promosi","Non-Promosi"],
         "Jumlah":[637,481]
     }))
     
     col1, col2 = st.columns(2)
 
-    col1.metric("Persentase Buzzer", "56,98%")
-    col2.metric("Persentase Non-Buzzer", "43,02%")
+    col1.metric("Persentase Promosi", "56,98%")
+    col2.metric("Persentase Non-Promosi", "43,02%")
     st.subheader("Pembagian Data")
 
     col1, col2 = st.columns(2)
@@ -280,7 +280,7 @@ elif menu == "Dataset":
     st.markdown(""" 
     ### Deskripsi Dataset
 
-    Dataset penelitian terdiri dari 1.118 caption TikTok Shop yang diperoleh melalui proses pengumpulan data, seleksi data, dan pelabelan manual. Dataset tersebut terdiri dari 637 data buzzer dan 481 data non-buzzer yang digunakan dalam proses pelatihan dan pengujian model.
+    Dataset penelitian terdiri dari 1.118 caption TikTok Shop yang diperoleh melalui proses pengumpulan data, seleksi data, dan pelabelan manual. Dataset tersebut terdiri dari 637 data promosi dan 481 data non-promosi yang digunakan dalam proses pelatihan dan pengujian model.
     """)
 
 # ==================================
@@ -399,7 +399,7 @@ elif menu == "Evaluasi Model":
     st.write("""
     Evaluasi model dilakukan menggunakan confusion matrix
     serta metrik accuracy, precision, recall, dan F1-score
-    untuk mengukur performa klasifikasi caption buzzer dan non-buzzer.
+    untuk mengukur performa klasifikasi caption promosi dan non-promosi.
     """)
     
     col1, col2, col3, col4 = st.columns(4)
@@ -432,16 +432,16 @@ elif menu == "Evaluasi Model":
 
     st.info("""
     Accuracy menunjukkan tingkat ketepatan model secara keseluruhan.
-    Precision menunjukkan ketepatan model dalam memprediksi kelas buzzer.
-    Recall menunjukkan kemampuan model dalam mengenali data buzzer.
+    Precision menunjukkan ketepatan model dalam memprediksi kelas promosi.
+    Recall menunjukkan kemampuan model dalam mengenali data promosi.
     F1-Score merupakan kombinasi antara precision dan recall.
     """)
 
     st.write("""
     Berdasarkan hasil evaluasi, model memiliki nilai recall sebesar 85%
     yang menunjukkan bahwa model mampu mengenali sebagian besar caption
-    buzzer dengan baik. Nilai accuracy sebesar 77% menunjukkan bahwa
-    model dapat mengklasifikasikan caption buzzer dan non-buzzer dengan
+    promosi dengan baik. Nilai accuracy sebesar 77% menunjukkan bahwa
+    model dapat mengklasifikasikan caption promosi dan non-promosi dengan
     performa yang cukup baik.
     """)
 
@@ -462,7 +462,7 @@ elif menu == "Pola Promosi":
     st.subheader("Karakteristik Caption")
 
     karakteristik = pd.DataFrame({
-        "Buzzer":[
+        "Promosi":[
             "promo",
             "beli",
             "murah",
@@ -472,7 +472,7 @@ elif menu == "Pola Promosi":
             "link",
             "harga"
         ],
-        "Non-Buzzer":[
+        "Non-Promosi":[
             "review",
             "produk",
             "pakai",
@@ -490,8 +490,8 @@ elif menu == "Pola Promosi":
 
     hasil_pola = pd.DataFrame({
         "Kategori":[
-            "Buzzer",
-            "Non-Buzzer"
+            "Promosi",
+            "Non-Promosi"
         ],
         "Karakteristik":[
             "Menggunakan kata promosi, ajakan pembelian, dan penekanan manfaat produk",
@@ -504,18 +504,18 @@ elif menu == "Pola Promosi":
     st.subheader("Temuan Penelitian")
 
     st.info("""
-    Caption buzzer cenderung menggunakan bahasa persuasif,
+    Caption promosi cenderung menggunakan bahasa persuasif,
     ajakan pembelian secara langsung, serta penekanan terhadap
-    keunggulan produk. Sebaliknya, caption non-buzzer lebih
+    keunggulan produk. Sebaliknya, caption non-promosi lebih
     banyak berisi pengalaman penggunaan, ulasan produk,
     dan informasi yang bersifat deskriptif.
     """)
 
     st.success("""
-    Berdasarkan hasil klasifikasi, pola promosi akun buzzer
+    Berdasarkan hasil klasifikasi, pola promosi akun promosi
     ditandai dengan penggunaan kata promosi yang kuat,
     ajakan pembelian secara langsung, dan penekanan manfaat produk.
-    Sementara itu, akun non-buzzer lebih berfokus pada ulasan
+    Sementara itu, akun non-promosi lebih berfokus pada ulasan
     serta pengalaman penggunaan produk.
     """)
 
@@ -531,7 +531,7 @@ elif menu == "Analisis Caption":
     st.write("""
     Masukkan caption TikTok Shop
     untuk mengetahui hasil klasifikasi
-    buzzer atau non-buzzer berdasarkan
+    promosi atau non-promosi berdasarkan
     model hasil penelitian.
     """)
 
@@ -571,15 +571,15 @@ elif menu == "Analisis Caption":
         st.subheader("Hasil Klasifikasi")
 
         if hasil == 1:
-            st.error("⚠️ BUZZER")
+            st.error("⚠️ PROMOSI")
         else:
-            st.success("✅ NON-BUZZER")
+            st.success("✅ NON-PROMOSI")
 
         # PROBABILITAS
         st.subheader("Probabilitas Klasifikasi")
 
-        st.write(f"Label Non-Buzzer : {prob[0]*100:.2f}%")
-        st.write(f"Label Buzzer : {prob[1]*100:.2f}%")
+        st.write(f"Label Non-Promosi : {prob[0]*100:.2f}%")
+        st.write(f"Label Promosi : {prob[1]*100:.2f}%")
 
         # PREPROCESSING
         st.subheader("Tahapan Preprocessing")
