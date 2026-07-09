@@ -216,8 +216,8 @@ if menu == "Dashboard":
     col1,col2,col3,col4,col5 = st.columns(5)
 
     col1.metric("Dataset","1.118")
-    col2.metric("Buzzer","637")
-    col3.metric("Non-Buzzer","481")
+    col2.metric("Promosi","637")
+    col3.metric("Non-Promosi","481")
     col4.metric("Akurasi","77%")
     col5.metric("F1-Score","81%")
 
@@ -225,7 +225,7 @@ if menu == "Dashboard":
 
     st.write("""
     Penelitian ini menggunakan 1.118 caption TikTok Shop yang
-    telah dilabeli menjadi 637 data buzzer dan 481 data non-buzzer.
+    telah dilabeli menjadi 637 data promosi dan 481 data non-promosi.
     Hasil pengujian menunjukkan bahwa model Naïve Bayes memperoleh
     akurasi sebesar 77% dan F1-score sebesar 81%.
     Berdasarkan hasil klasifikasi, caption promosi cenderung
